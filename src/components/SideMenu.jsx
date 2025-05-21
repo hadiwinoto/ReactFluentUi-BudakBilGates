@@ -88,7 +88,9 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
             }}
             aria-label="Toggle menu"
             >
-            {!collapsed && 'MyApp'}
+            {!collapsed && 
+                <span style={{fontWeight:"bold", fontSize:"20px"}}>Gunanusa</span>
+            }
         </Button>
 
         {/* Menu List */}
