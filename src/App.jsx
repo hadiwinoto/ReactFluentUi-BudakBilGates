@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import LeaveRequest from './pages/leaveManagement/LeaveRequest';
+import Login from './pages/auth/Login';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Navbar />
           <div style={{ flex: 1, padding: '20px', backgroundColor: "#F3F2F1" }}>
             <Routes>
+              <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/leave-request" element={<LeaveRequest />} />
