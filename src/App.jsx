@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+import LeaveRequest from './pages/leaveManagement/LeaveRequest';
 
 
 function App() {
@@ -38,11 +39,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
-
-
-
-
-
+              <Route path="/leave-request" element={<LeaveRequest />} />
             </Routes>
           </div>
           {/* <Footer /> */}

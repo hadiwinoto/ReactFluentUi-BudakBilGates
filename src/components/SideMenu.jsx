@@ -9,13 +9,10 @@ import {
 
 import {
   PeopleRegular,
-  SearchRegular,
-  ClipboardTextLtrRegular,
-  BriefcaseRegular,
   CalendarRegular,
-  HeartPulseRegular,
   NavigationRegular,
   AppsListDetailRegular,
+  PersonArrowLeftRegular,
   GridRegular
 } from '@fluentui/react-icons';
 
@@ -30,7 +27,7 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
   const currentPath = location.pathname;
   const sidebarWidth = collapsed ? '60px' : '200px';
   const toggleSidebar = () => setCollapsed(!collapsed);
-  
+
 
   const menuStyle = {
     display: 'flex',
@@ -56,7 +53,7 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
   return (
     <FluentProvider theme={webLightTheme}>
       <aside
-       style={{
+        style={{
           width: sidebarWidth,
           height: '100vh',
           backgroundColor: '#f3f2f1',
@@ -74,67 +71,101 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
       >
         {/* Header */}
         <Button
-            icon={<NavigationRegular />}
-            appearance="subtle"
-            onClick={toggleSidebar}
-            style={{
-                backgroundColor:"#F3F2F1",
-                marginBottom: '2px',
-                alignSelf: collapsed ? 'center' : 'flex-start',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontWeight: 'bold',
-            }}
-            aria-label="Toggle menu"
-            >
-            {!collapsed && 
-                <span style={{fontWeight:"bold", fontSize:"20px"}}>Gunanusa</span>
+          icon={<NavigationRegular style={{ color: collapsed ? "#0078D4" : "inherit" }} />} // Warna aktif saat hover/collapsed
+          appearance="subtle"
+          onClick={toggleSidebar}
+          style={{
+            marginBottom: "8px",
+            alignSelf: collapsed ? "center" : "flex-start",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            fontWeight: "bold",
+            overflow: "hidden",
+            paddingLeft: collapsed ? "20px" : "8px",
+            paddingRight: collapsed ? "8px" : "12px",
+            transition: "all 0.3s ease",
+            maxWidth: collapsed ? "40px" : "100%",
+            backgroundColor: collapsed ? "transparent" : undefined,
+            cursor: "pointer",
+          }}
+          aria-label="Toggle menu"
+          onMouseEnter={(e) => {
+            if (collapsed) {
+              e.currentTarget.style.backgroundColor = "#f3f2f1";
             }
+          }}
+          onMouseLeave={(e) => {
+            if (collapsed) {
+              e.currentTarget.style.backgroundColor = "transparent";
+            }
+          }}
+        >
+          <span
+            style={{
+              opacity: collapsed ? 0 : 1,
+              maxWidth: collapsed ? 0 : "200px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              transition: "all 0.3s ease",
+              pointerEvents: collapsed ? "none" : "auto",
+            }}
+          >
+            Gunanusa
+          </span>
         </Button>
+
 
         {/* Menu List */}
         <div style={menuStyle}>
-          <MenuItem onClick={() => navigate('/')} icon={<GridRegular />} style={menuItemStyle}>
+          {/* <MenuItem onClick={() => navigate('/')} icon={<GridRegular />} style={menuItemStyle}>
             {!collapsed && 'Home'}
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem onClick={() => navigate('/dashboard')} icon={<AppsListDetailRegular />} style={menuItemStyle}>
             {!collapsed && 'Dashboard'}
           </MenuItem>
           <MenuItem icon={<PeopleRegular />} style={menuItemStyle}>
             {!collapsed && 'Employee Spotlight'}
           </MenuItem>
-          <MenuItem icon={<SearchRegular />} style={menuItemStyle}>
+          {/* <MenuItem icon={<SearchRegular />} style={menuItemStyle}>
             {!collapsed && 'Profile Search'}
-          </MenuItem>
-          <MenuItem icon={<ClipboardTextLtrRegular />} style={menuItemStyle}>
+          </MenuItem> */}
+          {/* <MenuItem icon={<ClipboardTextLtrRegular />} style={menuItemStyle}>
             {!collapsed && 'Performance Reviews'}
-          </MenuItem>
+          </MenuItem> */}
 
-          {!collapsed && <div style={sectionLabelStyle}>Employee Management</div>}
+          {!collapsed && <div style={sectionLabelStyle}>Leave Management</div>}
 
-          <MenuItem
+          {/* <MenuItem
             icon={<BriefcaseRegular />}
             style={menuItemStyle}
             onClick={() => setJobOpen(!jobOpen)}
           >
             {!collapsed && 'Job Postings'}
-          </MenuItem>
-          {jobOpen && !collapsed && (
+          </MenuItem> */}
+          {/* {jobOpen && !collapsed && (
             <div style={{ marginLeft: '20px', marginTop: '4px' }}>
               <Text size={200} style={{ display: 'block', marginBottom: 4 }}>• Developer</Text>
               <Text size={200} style={{ display: 'block' }}>• Designer</Text>
             </div>
-          )}
+          )} */}
+
+          <MenuItem onClick={() => navigate('/leave-request')} icon={<PersonArrowLeftRegular />} style={menuItemStyle}>
+            {!collapsed && 'Leave Request'}
+          </MenuItem>
 
           <MenuItem icon={<CalendarRegular />} style={menuItemStyle}>
-            {!collapsed && 'Interviews'}
+            {!collapsed && 'Overtime Request'}
           </MenuItem>
 
-          {!collapsed && <div style={sectionLabelStyle}>Benefits</div>}
+          <MenuItem icon={<CalendarRegular />} style={menuItemStyle}>
+            {!collapsed && 'Reimbursement'}
+          </MenuItem>
+
+          {/* {!collapsed && <div style={sectionLabelStyle}>Benefits</div>}
           <MenuItem icon={<HeartPulseRegular />} style={menuItemStyle}>
             {!collapsed && 'Health Plans'}
-          </MenuItem>
+          </MenuItem> */}
         </div>
       </aside>
     </FluentProvider>
