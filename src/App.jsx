@@ -8,6 +8,7 @@ import SidebarMenu from './components/SideMenu';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import LeaveRequest from './pages/leaveManagement/LeaveRequest';
+import FormRequest from './pages/leaveManagement/FormRequest';
 import LoginForm from './pages/auth/Login';
 
 function Layout({ collapsed, setCollapsed }) {
@@ -32,6 +33,7 @@ function Layout({ collapsed, setCollapsed }) {
             <Route path="/home" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leave-request" element={<LeaveRequest />} />
+            <Route path="/form-request" element={<FormRequest />} />
           </Routes>
         </div>
         {/* <Footer /> */}
