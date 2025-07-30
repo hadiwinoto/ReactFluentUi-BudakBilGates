@@ -36,7 +36,7 @@ const LoginForm = () => {
             padding: 20,
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
             borderRadius: 1,
-            border: '1px solid #ddd',
+            // border: '1px solid #ddd',
             backgroundColor: 'white',
           },
         }}
