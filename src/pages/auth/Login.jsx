@@ -10,10 +10,10 @@ const LoginForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (!username || !password) {
-      setErrorMessage('Username dan password wajib diisi');
+      setErrorMessage('Username is required');
     } else {
       setErrorMessage('');
-      alert(`Login berhasil! Username: ${username}`);
+      alert(`Login successful! Username: ${username}`);
     }
   };
 
@@ -35,8 +35,7 @@ const LoginForm = () => {
           root: {
             padding: 20,
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            borderRadius: 1,
-            // border: '1px solid #ddd',
+            borderRadius: 1,  
             backgroundColor: 'white',
           },
         }}
