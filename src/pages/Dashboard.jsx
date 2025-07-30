@@ -76,7 +76,7 @@ const Dashboard = () => {
     <div className={styles.container}>
       <Card className={styles.card}>
         <header className={mergeClasses(styles.flex, styles.labels)}>
-          <Badge color="severe" shape="rounded" appearance="tint">
+          {/* <Badge color="severe" shape="rounded" appearance="tint">
             Red
           </Badge>
 
@@ -86,10 +86,10 @@ const Dashboard = () => {
 
           <Badge color="brand" shape="rounded" appearance="tint">
             Blue
-          </Badge>
+          </Badge> */}
         </header>
 
-        <div className={styles.taskCheckbox}>
+        {/* <div className={styles.taskCheckbox}>
           <Checkbox id="task-1" />
 
           <label htmlFor="task-1">
@@ -102,9 +102,9 @@ const Dashboard = () => {
               Marshmallow pastry jujubes toffee sugar plum.
             </Caption1>
           </label>
-        </div>
+        </div> */}
 
-        <div className={styles.taskCheckbox}>
+        {/* <div className={styles.taskCheckbox}>
           <Checkbox id="task-2" />
 
           <label htmlFor="task-2">
@@ -117,9 +117,9 @@ const Dashboard = () => {
               Marshmallow pastry jujubes toffee sugar plum.
             </Caption1>
           </label>
-        </div>
+        </div> */}
 
-        <footer className={mergeClasses(styles.flex, styles.footer)}>
+        {/* <footer className={mergeClasses(styles.flex, styles.footer)}>
           <AlertUrgent16Filled primaryFill="#C4314B" />
           <CircleHalfFill16Regular primaryFill="#0078DB" />
 
@@ -134,19 +134,19 @@ const Dashboard = () => {
           </div>
 
           <Comment16Regular />
-        </footer>
+        </footer> */}
       </Card>
 
-      <Card className={styles.card}>
+      {/* <Card className={styles.card}>
         <CardPreview>
           <img
             src={resolveAsset("intelligence.png")}
             alt="Intelligence - Design to Amplify"
           />
         </CardPreview>
-      </Card>
+      </Card> */}
 
-      <div className={styles.grid} role="list">
+      {/* <div className={styles.grid} role="list">
         <Card className={styles.card} size="small" role="listitem">
           <CardHeader
             image={{
@@ -204,7 +204,7 @@ const Dashboard = () => {
             }
           />
         </Card>
-      </div>
+      </div> */}
     </div>
   );
 };
