@@ -7,7 +7,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();  // hook untuk redirect
+  const navigate = useNavigate();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -16,7 +16,6 @@ const LoginForm = () => {
     } else {
       setErrorMessage('');
       alert(`Login successful! Username: ${username}`);
-
       // redirect ke home setelah login berhasil
       navigate('/home');
     }
