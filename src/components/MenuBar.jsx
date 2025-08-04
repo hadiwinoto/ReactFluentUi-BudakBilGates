@@ -4,7 +4,6 @@ import {
   FluentProvider,
   webLightTheme,
   Toolbar,
-  ToolbarButton,
   Text,
 } from '@fluentui/react-components';
 
