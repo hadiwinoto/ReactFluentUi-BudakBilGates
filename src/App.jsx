@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
-
 //layout
 import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
@@ -13,24 +12,23 @@ import Dashboard from './pages/Dashboard';
 import LeaveRequest from './pages/leaveManagement/LeaveRequest';
 import FormRequest from './pages/leaveManagement/FormRequest';
 import LoginForm from './pages/auth/Login';
-import MenuBar from './components/MenuBar';
 
 function Layout() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
-       <MenuBar />
       <main
         style={{
           flex: 1,
           padding: '5px',
           backgroundColor: '#F3F2F1',
-          width: '100%',
+          minWidth: '100vw', // ganti dari '100vh' yang salah jadi '100vw'
+          maxWidth: '100vw', // supaya tidak melebihi viewport width
           boxSizing: 'border-box',
-          overflowX: 'auto',
+          overflowX: 'auto', // agar horizontal scroll muncul jika isi melebihi lebar viewport
+          overflowY: 'auto'  // agar jika panjang konten tinggi lebih dari viewport, bisa scroll vertikal juga
         }}
       >
-         {/* <Navbar /> */}
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -55,7 +53,7 @@ function AppWrapper() {
   }, [collapsed]);
 
   // Cek apakah path sekarang adalah "/login"
-  const isLoginPage = location.pathname === '/';
+  const isLoginPage = location.pathname === '/' || location.pathname === '/login';
 
   // Jika di halaman login, render LoginForm tanpa layout
   if (isLoginPage) {

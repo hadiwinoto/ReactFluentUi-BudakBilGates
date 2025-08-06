@@ -163,7 +163,7 @@ const FormRequest = () => {
                                 <DatePicker
                                     className={styles.control}
                                     placeholder="Select a date..."
-                                    style={{ borderRadius: '1px', width: '100%' }}
+                                    style={{ borderRadius: '1px', maxwidth: '100%' }}
                                 />
                                 </Field>
                             </div>

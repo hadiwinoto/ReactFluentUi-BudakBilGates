@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
-import {
-  FluentProvider,
-  webLightTheme,
-  Toolbar,
-  ToolbarButton,
-  Text,
-  Image,
-} from '@fluentui/react-components';
-import { MailRegular, CalendarRegular, SettingsRegular } from '@fluentui/react-icons';
-import MenuBar from './MenuBar';
+import { MailRegular, CalendarRegular, SettingsRegular, AppsRegular } from '@fluentui/react-icons';
 import {
   Button,
-  Menu,
   MenuTrigger,
   MenuList,
   MenuItem,
   MenuPopover,
+  FluentProvider,
+  webLightTheme,
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  Menu,
+  Image,
+  Text,
 } from "@fluentui/react-components";
+import { useNavigate } from 'react-router-dom';
+import client from '../service/autClient'; // Adjust the import based on your project structure
 
 const IconButton = ({ Icon }) => {
   const [hover, setHover] = useState(false);
+
+
 
   return (
     <ToolbarButton
@@ -31,6 +33,28 @@ const IconButton = ({ Icon }) => {
 };
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+    try {
+      const response = await client.post('/logout');
+
+      if (response.status === 200) {
+        localStorage.removeItem('token');
+        navigate('/');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+  
+  
+  const handleNavigation = (path) => {
+      navigate(path);
+  };
   return (
     <FluentProvider theme={webLightTheme}>
       <Toolbar
@@ -53,7 +77,6 @@ const Navbar = () => {
             height={45}
             width={215}
           />
-        {/* <Text weight="semibold" style={{ color: 'black',fontSize:"23px" }}>Gunahub</Text> */}
       </div>
     
         <div style={{ display: 'flex', gap: '12px' }}>
@@ -74,12 +97,49 @@ const Navbar = () => {
                 <MenuItem>Settings</MenuItem>
                 <MenuItem>Help</MenuItem>
                 <div style={{ borderTop: '1px solid #e0e0e0', margin: '4px 0' }}></div>
-                <MenuItem><span className='text-danger' style={{color: 'red'}}>Logout</span></MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  <span className='text-danger' style={{ color: 'red' }}>Logout</span>
+                </MenuItem>
               </MenuList>
             </MenuPopover>
           </Menu>
         </div>
       </Toolbar>
+
+
+      {/* menu bar */}
+      <Toolbar
+              style={{
+                backgroundColor: '#ffffff',
+                padding: '0 16px',
+                height: 38,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid #e0e0e0',
+              }}
+            >
+              <ToolbarGroup>
+                <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<AppsRegular />}>
+                  Dashboard
+                </ToolbarButton>
+                <Menu positioning={{ autoSize: true }}>
+                  <MenuTrigger disableButtonEnhancement>
+                     <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<CalendarRegular />}>
+                    Employee Self Service
+                  </ToolbarButton>
+                  </MenuTrigger>
+      
+                  <MenuPopover>
+                    <MenuList>
+                      <MenuItem onClick={() => handleNavigation('/leave-request')}>Time Off Request</MenuItem>
+                      <MenuItem>Overtime Request</MenuItem>
+                    </MenuList>
+                  </MenuPopover>
+                </Menu>
+              </ToolbarGroup>
+      
+            </Toolbar>
     </FluentProvider>
   );
 };
