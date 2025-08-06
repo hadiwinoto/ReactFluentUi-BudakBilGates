@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Stack, Text, PrimaryButton } from '@fluentui/react';
 import { useNavigate } from 'react-router-dom';
 
-const Error500Page = () => {
+const ServerErrorPage = () => {
   const navigate = useNavigate();
 
   const goBackHome = () => {
@@ -34,4 +34,4 @@ const Error500Page = () => {
   );
 };
 
-export default Error500Page;
+export default ServerErrorPage;

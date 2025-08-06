@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, matchPath } from '
 import Navbar from './components/Navbar';
 import NotFoundPage from './pages/errors/NotFoundPage404';
 import ForbiddenPage from './pages/errors/ForbiddenPage403';
-import Error500Page from './pages/errors/Error500Page';
+import ServerErrorPage from './pages/errors/ServerErrorPage500';
 
 //pages
 import Home from './pages/Home';
@@ -33,13 +33,11 @@ function Layout() {
       <main
         style={{
           flex: 1,
-          padding: '5px',
+          padding: '10px',
           backgroundColor: '#F3F2F1',
           minWidth: '100vw',
           maxWidth: '100vw',
           boxSizing: 'border-box',
-          overflowX: 'auto',
-          overflowY: 'auto'
         }}
       >
         <Routes>
@@ -66,7 +64,6 @@ function AppWrapper() {
   }, [collapsed]);
 
   const pathname = location.pathname;
-
 
   if (pathname === '/' || pathname === '/login') {
     return <LoginForm />;

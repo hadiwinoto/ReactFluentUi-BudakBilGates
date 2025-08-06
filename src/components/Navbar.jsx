@@ -71,12 +71,12 @@ const Navbar = () => {
             alt="Test Logo"
             shape="circular"
             src='https://www.gunanusautama.co.id/images/logo.png'
-            height={45}
+            height={48}
             width={215}
           />
         </div>
 
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
           <IconButton Icon={MailRegular} />
           <Menu positioning={{ autoSize: true }}>
             <MenuTrigger disableButtonEnhancement>

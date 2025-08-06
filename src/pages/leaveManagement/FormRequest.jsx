@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Field, Button, Select, Textarea ,makeStyles } from "@fluentui/react-components";
+import { Field, Button, Select, Textarea, makeStyles } from "@fluentui/react-components";
 import { } from "@fluentui/react-components";
 import client from '../../service/autClient';
 
@@ -13,15 +13,15 @@ import {
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 
 const useStyles = makeStyles({
-  control: {
-    maxWidth: "100%",
-  },
+    control: {
+        maxWidth: "100%",
+    },
 });
 
 const customSelectStyles = {
-  root: {
-    borderRadius: '1px',
-  }
+    root: {
+        borderRadius: '1px',
+    }
 };
 
 const FormRequest = () => {
@@ -90,17 +90,18 @@ const FormRequest = () => {
                     </BreadcrumbButton>
                 </BreadcrumbItem>
             </Breadcrumb>
-            <div style={{ maxWidth: 600, margin: 'auto', fontFamily: 'Arial, sans-serif', padding: 20 }}>
+            <div
+                style={{
+                    maxWidth: 600,
+                    width: '100%',
+                    margin: 'auto',
+                    fontFamily: 'Arial, sans-serif',
+                    padding: 20,
+                    boxSizing: 'border-box',
+                }}
+            >
                 <div className="card mt-3" style={{ padding: 20, boxShadow: '0 2px 4px rgba(248, 243, 243, 0.1)', borderRadius: 1, backgroundColor: "#FFFFFF" }}>
                     <form onSubmit={onSubmit}>
-                        {/* <div style={{ marginBottom: 5 }}>
-                            <Field
-                                label="Full Name *"
-                            >
-                                <Input readOnly style={{ borderRadius: "1px" }} />
-                            </Field>
-                        </div> */}
-
                         <div style={{ marginBottom: 5 }}>
                             <Field
                                 label="Time Of type"
@@ -144,47 +145,31 @@ const FormRequest = () => {
 
                         <div style={{ marginBottom: 10 }}>
                             <Field label="Description">
-                                <Textarea  style={{borderRadius: "1px"}}/>
+                                <Textarea style={{ borderRadius: "1px" }} />
                             </Field>
                         </div>
 
-                        <div style={{ display: 'flex', gap: 20, marginBottom: 25, alignItems: 'center' }}>
-                            <div style={{ flex: 1 }}>
-                                <Field label="Start Date">
+                        <div style={{ marginBottom: 10 }}>
+
+                            <Field label="Start Date">
                                 <DatePicker
                                     className={styles.control}
                                     placeholder="Select a date..."
                                     style={{ borderRadius: '1px', width: '100%' }}
                                 />
-                                </Field>
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <Field label="End Date">
+                            </Field>
+
+                        </div>
+                        <div style={{ marginBottom: 15 }}>
+
+                            <Field label="End Date">
                                 <DatePicker
                                     className={styles.control}
                                     placeholder="Select a date..."
                                     style={{ borderRadius: '1px', maxwidth: '100%' }}
                                 />
-                                </Field>
-                            </div>
-                            </div>
-
-
-
-
-
-
-                        {/* <div style={{ marginBottom: 15, fontWeight: 'bold' }}>
-                            Jumlah Hari Cuti yang Diajukan: {leaveDays} hari
+                            </Field>
                         </div>
-
-                        <div style={{ marginBottom: 15, fontWeight: 'bold' }}>
-                            Total Hak Cuti: {totalLeave} hari
-                        </div>
-
-                        <div style={{ marginBottom: 25, fontWeight: 'bold' }}>
-                            Total Sisa Hak Cuti Setelah Diambil: {updatedRemainingLeave >= 0 ? updatedRemainingLeave : 'Tidak valid'}
-                        </div> */}
 
                         <Button type="submit" appearance="primary">
                             Submit
