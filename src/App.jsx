@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 import LeaveRequest from './pages/leaveManagement/LeaveRequest';
 import FormRequest from './pages/leaveManagement/FormRequest';
 import LoginForm from './pages/auth/Login';
+import MenuBar from './components/MenuBar';
 
 const validRoutes = [
   '/home',
@@ -30,6 +31,7 @@ function Layout() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
+      <MenuBar/>
       <main
         style={{
           flex: 1,

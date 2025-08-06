@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MailRegular, CalendarRegular, AppsRegular } from '@fluentui/react-icons';
+import { MailRegular } from '@fluentui/react-icons';
 import {
   Button,
   MenuTrigger,
@@ -10,10 +10,8 @@ import {
   webLightTheme,
   Toolbar,
   ToolbarButton,
-  ToolbarGroup,
   Menu,
   Image,
-  Text,
 } from "@fluentui/react-components";
 import { useNavigate } from 'react-router-dom';
 import client from '../service/autClient';
@@ -48,10 +46,6 @@ const Navbar = () => {
     }
   };
 
-
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
   return (
     <FluentProvider theme={webLightTheme}>
       <Toolbar
@@ -101,41 +95,6 @@ const Navbar = () => {
             </MenuPopover>
           </Menu>
         </div>
-      </Toolbar>
-
-
-      {/* menu bar */}
-      <Toolbar
-        style={{
-          backgroundColor: '#ffffff',
-          padding: '0 16px',
-          height: 38,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #e0e0e0',
-        }}
-      >
-        <ToolbarGroup>
-          <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<AppsRegular />}>
-            Dashboard
-          </ToolbarButton>
-          <Menu positioning={{ autoSize: true }}>
-            <MenuTrigger disableButtonEnhancement>
-              <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<CalendarRegular />}>
-                Employee Self Service
-              </ToolbarButton>
-            </MenuTrigger>
-
-            <MenuPopover>
-              <MenuList>
-                <MenuItem onClick={() => handleNavigation('/leave-request')}>Time Off Request</MenuItem>
-                <MenuItem>Overtime Request</MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
-        </ToolbarGroup>
-
       </Toolbar>
     </FluentProvider>
   );
