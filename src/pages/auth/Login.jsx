@@ -81,7 +81,7 @@ const LoginForm = () => {
             },
           }}
         >
-          <h2 style={{ textAlign: 'center' }}>Login</h2>
+          <label style={{ textAlign: 'center',fontSize:"20px" }}><b>Login</b></label>
           {errorMessage && (
             <MessageBar messageBarType={MessageBarType.error}>{errorMessage}</MessageBar>
           )}
