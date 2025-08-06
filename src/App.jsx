@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, matchPath } from 'react-router-dom';
 
 //layout
 import Navbar from './components/Navbar';
-// import Footer from './components/Footer';
-
+import NotFoundPage from './pages/errors/NotFoundPage404';
+import ForbiddenPage from './pages/errors/ForbiddenPage403';
+import Error500Page from './pages/errors/Error500Page';
 
 //pages
 import Home from './pages/Home';
@@ -12,6 +13,18 @@ import Dashboard from './pages/Dashboard';
 import LeaveRequest from './pages/leaveManagement/LeaveRequest';
 import FormRequest from './pages/leaveManagement/FormRequest';
 import LoginForm from './pages/auth/Login';
+
+const validRoutes = [
+  '/home',
+  '/dashboard',
+  '/leave-request',
+  '/leave-request-form',
+  '/leave-request/:id'
+];
+
+function isValidPath(pathname) {
+  return validRoutes.some((pattern) => matchPath({ path: pattern, end: true }, pathname));
+}
 
 function Layout() {
   return (
@@ -34,9 +47,9 @@ function Layout() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/leave-request" element={<LeaveRequest />} />
           <Route path="/leave-request-form" element={<FormRequest />} />
+          <Route path="/leave-request/:id" element={<LeaveRequest />} />
         </Routes>
       </main>
-      {/* <Footer /> */}
     </div>
   );
 }
@@ -52,25 +65,23 @@ function AppWrapper() {
     localStorage.setItem('sidebarCollapsed', collapsed);
   }, [collapsed]);
 
-  // Cek apakah path sekarang adalah "/login"
-  const isLoginPage = location.pathname === '/' || location.pathname === '/login';
+  const pathname = location.pathname;
 
-  // Jika di halaman login, render LoginForm tanpa layout
-  if (isLoginPage) {
+
+  if (pathname === '/' || pathname === '/login') {
     return <LoginForm />;
   }
 
-  // Jika bukan login, render layout utama
-  return <Layout collapsed={collapsed} setCollapsed={setCollapsed} />;
+  if (isValidPath(pathname)) {
+    return <Layout collapsed={collapsed} setCollapsed={setCollapsed} />;
+  }
+  return <NotFoundPage />;
 }
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Route login langsung di sini supaya dapat dikenali oleh AppWrapper */}
-        <Route path="/" element={<AppWrapper />} />
-        {/* Route lain didelegasikan ke AppWrapper yang akan render layout utama */}
         <Route path="/*" element={<AppWrapper />} />
       </Routes>
     </Router>

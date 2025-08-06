@@ -90,6 +90,20 @@ const LoginForm = () => {
             value={email}
             onChange={(e, newValue) => setEmail(newValue || '')}
             required
+            styles={{
+              fieldGroup: {
+                borderWidth: 1,
+                borderColor: '#c8c6c4',
+                borderRadius: 1,
+                height: 33,
+                fontSize: 16,
+              },
+              field: {
+                fontSize: 14,
+                height: 30,
+                padding: '0 10px',
+              },
+            }}
           />
           <TextField
             label="Password"
@@ -97,6 +111,20 @@ const LoginForm = () => {
             value={password}
             onChange={(e, newValue) => setPassword(newValue || '')}
             required
+            styles={{
+              fieldGroup: {
+                borderWidth: 1,
+                borderColor: '#c8c6c4',
+                borderRadius: 1,
+                height: 33,
+                fontSize: 14,
+              },
+              field: {
+                fontSize: 14,
+                height: 30,
+                padding: '0 10px',
+              },
+            }}
           />
           <PrimaryButton
             type="submit"
