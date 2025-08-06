@@ -22,11 +22,11 @@ function Layout() {
           flex: 1,
           padding: '5px',
           backgroundColor: '#F3F2F1',
-          minWidth: '100vw', // ganti dari '100vh' yang salah jadi '100vw'
-          maxWidth: '100vw', // supaya tidak melebihi viewport width
+          minWidth: '100vw',
+          maxWidth: '100vw',
           boxSizing: 'border-box',
-          overflowX: 'auto', // agar horizontal scroll muncul jika isi melebihi lebar viewport
-          overflowY: 'auto'  // agar jika panjang konten tinggi lebih dari viewport, bisa scroll vertikal juga
+          overflowX: 'auto',
+          overflowY: 'auto'
         }}
       >
         <Routes>

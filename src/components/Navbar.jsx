@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MailRegular, CalendarRegular, SettingsRegular, AppsRegular } from '@fluentui/react-icons';
+import { MailRegular, CalendarRegular, AppsRegular } from '@fluentui/react-icons';
 import {
   Button,
   MenuTrigger,
@@ -16,13 +16,10 @@ import {
   Text,
 } from "@fluentui/react-components";
 import { useNavigate } from 'react-router-dom';
-import client from '../service/autClient'; // Adjust the import based on your project structure
+import client from '../service/autClient';
 
 const IconButton = ({ Icon }) => {
   const [hover, setHover] = useState(false);
-
-
-
   return (
     <ToolbarButton
       onMouseEnter={() => setHover(true)}
@@ -34,9 +31,9 @@ const IconButton = ({ Icon }) => {
 
 const Navbar = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       const response = await client.post('/logout');
 
@@ -50,10 +47,10 @@ const Navbar = () => {
       console.error('Logout error:', error);
     }
   };
-  
-  
+
+
   const handleNavigation = (path) => {
-      navigate(path);
+    navigate(path);
   };
   return (
     <FluentProvider theme={webLightTheme}>
@@ -77,11 +74,11 @@ const Navbar = () => {
             height={45}
             width={215}
           />
-      </div>
-    
+        </div>
+
         <div style={{ display: 'flex', gap: '12px' }}>
           <IconButton Icon={MailRegular} />
-           <Menu positioning={{ autoSize: true }}>
+          <Menu positioning={{ autoSize: true }}>
             <MenuTrigger disableButtonEnhancement>
               <Image
                 alt="Erik's avatar"
@@ -109,37 +106,37 @@ const Navbar = () => {
 
       {/* menu bar */}
       <Toolbar
-              style={{
-                backgroundColor: '#ffffff',
-                padding: '0 16px',
-                height: 38,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid #e0e0e0',
-              }}
-            >
-              <ToolbarGroup>
-                <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<AppsRegular />}>
-                  Dashboard
-                </ToolbarButton>
-                <Menu positioning={{ autoSize: true }}>
-                  <MenuTrigger disableButtonEnhancement>
-                     <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<CalendarRegular />}>
-                    Employee Self Service
-                  </ToolbarButton>
-                  </MenuTrigger>
-      
-                  <MenuPopover>
-                    <MenuList>
-                      <MenuItem onClick={() => handleNavigation('/leave-request')}>Time Off Request</MenuItem>
-                      <MenuItem>Overtime Request</MenuItem>
-                    </MenuList>
-                  </MenuPopover>
-                </Menu>
-              </ToolbarGroup>
-      
-            </Toolbar>
+        style={{
+          backgroundColor: '#ffffff',
+          padding: '0 16px',
+          height: 38,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '1px solid #e0e0e0',
+        }}
+      >
+        <ToolbarGroup>
+          <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<AppsRegular />}>
+            Dashboard
+          </ToolbarButton>
+          <Menu positioning={{ autoSize: true }}>
+            <MenuTrigger disableButtonEnhancement>
+              <ToolbarButton aria-label="Calendar" title="Calendar" appearance="subtle" icon={<CalendarRegular />}>
+                Employee Self Service
+              </ToolbarButton>
+            </MenuTrigger>
+
+            <MenuPopover>
+              <MenuList>
+                <MenuItem onClick={() => handleNavigation('/leave-request')}>Time Off Request</MenuItem>
+                <MenuItem>Overtime Request</MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+        </ToolbarGroup>
+
+      </Toolbar>
     </FluentProvider>
   );
 };
