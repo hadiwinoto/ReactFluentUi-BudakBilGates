@@ -25,9 +25,9 @@ function Layout() {
           flex: 1,
           padding: '5px',
           backgroundColor: '#F3F2F1',
-          width: '100%',   // penuh lebar wadah induk
+          width: '100%',
           boxSizing: 'border-box',
-          overflowX: 'auto',  // untuk scroll bila konten overflow horizontal
+          overflowX: 'auto',
         }}
       >
          {/* <Navbar /> */}

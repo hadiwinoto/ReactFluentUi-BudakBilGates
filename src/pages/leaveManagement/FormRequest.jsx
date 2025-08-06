@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field, Button, Select, Textarea ,makeStyles } from "@fluentui/react-components";
 import { } from "@fluentui/react-components";
+import client from '../../service/autClient';
 
 import {
     Breadcrumb,
@@ -29,6 +30,8 @@ const FormRequest = () => {
     const [endDate, setEndDate] = useState('');
     const [totalLeave, setTotalLeave] = useState(12);
     const [remainingLeave, setRemainingLeave] = useState(10);
+    const [optionstype, setOptionstype] = useState([]);
+    const [optionsEmployee, setOptionsEmployee] = useState([]);
 
 
     const calculateLeaveDays = (start, end) => {
@@ -54,9 +57,23 @@ const FormRequest = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        // Implement submit logika sesuai kebutuhan, misal ke API backend
+
         alert(`Cuti diajukan oleh ${name} selama ${leaveDays} hari.`);
     };
+
+    const getDataOptions = async () => {
+        try {
+            const response = await client.get('data-options');
+            setOptionstype(response.data.options_leave);
+            setOptionsEmployee(response.data.employee)
+        } catch (error) {
+            console.error('Error fetching leave types:', error);
+        }
+    };
+
+    useEffect(() => {
+        getDataOptions();
+    }, []);
 
     return (
         <>
@@ -90,9 +107,11 @@ const FormRequest = () => {
                             >
                                 <Select style={customSelectStyles}>
                                     <option></option>
-                                    <option>Annual Leave</option>
-                                    <option>Sick Leave</option>
-                                    <option>Bussiness Trip</option>
+                                    {optionstype.map((option, idx) => (
+                                        <option key={idx} value={option.pk_projectmaster_id}>
+                                            {option.name}
+                                        </option>
+                                    ))}
                                 </Select>
                             </Field>
                         </div>
@@ -105,6 +124,20 @@ const FormRequest = () => {
                                     <option></option>
                                     <option>Full Day</option>
                                     <option>Half Day</option>
+                                </Select>
+                            </Field>
+                        </div>
+                        <div style={{ marginBottom: 5 }}>
+                            <Field
+                                label="Delegate"
+                            >
+                                <Select style={customSelectStyles}>
+                                    <option></option>
+                                    {optionsEmployee.map((option, idxe) => (
+                                        <option key={idxe} value={option.pk_employee_id}>
+                                            {option.full_name}
+                                        </option>
+                                    ))}
                                 </Select>
                             </Field>
                         </div>

@@ -1,23 +1,60 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, PrimaryButton, Stack, MessageBar, MessageBarType } from '@fluentui/react';
+import authClient from '../../service/autClient';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (!username || !password) {
-      setErrorMessage('Username is required');
-    } else {
-      setErrorMessage('');
-      alert(`Login successful! Username: ${username}`);
-      // redirect ke home setelah login berhasil
+  // Cek token di localStorage saat komponen pertama kali dirender
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Jika token ditemukan, redirect ke halaman home
       navigate('/home');
+    }
+  }, [navigate]);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!email || !password) {
+      setErrorMessage('Email and password are required');
+      return;
+    }
+
+    setErrorMessage('');
+    setLoading(true);
+
+    try {
+      const response = await authClient.post('/login', {
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+
+      // Simpan token dan data user ke localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      alert(`Login successful! Welcome, ${user.full_name}`);
+
+      // Redirect ke halaman home setelah login sukses
+      navigate('/home');
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage('Login failed. Please try again.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,7 +76,7 @@ const LoginForm = () => {
             root: {
               padding: 20,
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-              borderRadius: 1,
+              borderRadius: 4,
               backgroundColor: 'white',
             },
           }}
@@ -49,9 +86,9 @@ const LoginForm = () => {
             <MessageBar messageBarType={MessageBarType.error}>{errorMessage}</MessageBar>
           )}
           <TextField
-            label="Username"
-            value={username}
-            onChange={(e, newValue) => setUsername(newValue || '')}
+            label="Email"
+            value={email}
+            onChange={(e, newValue) => setEmail(newValue || '')}
             required
           />
           <TextField
@@ -61,7 +98,11 @@ const LoginForm = () => {
             onChange={(e, newValue) => setPassword(newValue || '')}
             required
           />
-          <PrimaryButton type="submit" text="Login" />
+          <PrimaryButton
+            type="submit"
+            text={loading ? 'Logging in...' : 'Login'}
+            disabled={loading}
+          />
         </Stack>
       </form>
     </div>
