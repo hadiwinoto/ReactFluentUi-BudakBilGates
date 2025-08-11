@@ -16,7 +16,7 @@ import {
   Image,
 } from "@fluentui/react-components";
 import { useNavigate } from 'react-router-dom';
-import client from '../service/autClient';
+import client from '../service/authClient';
 
 const IconButton = ({ Icon }) => {
   const [hover, setHover] = useState(false);
@@ -35,7 +35,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await client.post('/logout');
+      const response = await client.post('/api/logout');
 
       if (response.status === 200) {
         localStorage.removeItem('token');

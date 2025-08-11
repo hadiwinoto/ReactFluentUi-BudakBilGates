@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { MailRegular, CalendarRegular, AppsRegular } from '@fluentui/react-icons';
+import { CalendarRegular, AppsRegular } from '@fluentui/react-icons';
 import {
-    Button,
     MenuTrigger,
     MenuList,
     MenuItem,
@@ -12,11 +11,9 @@ import {
     ToolbarButton,
     ToolbarGroup,
     Menu,
-    Image,
-    Text,
 } from "@fluentui/react-components";
 import { useNavigate, useLocation } from 'react-router-dom';
-import client from '../service/autClient';
+import client from '../service/authClient';
 
 const IconButton = ({ Icon }) => {
     const [hover, setHover] = useState(false);
@@ -24,16 +21,20 @@ const IconButton = ({ Icon }) => {
         <ToolbarButton
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            icon={<Icon style={{ color: hover ? '#1a73e8' : 'white' }} />}
+            icon={<Icon style={{ color: hover ? '#166cb3ff' : 'white' }} />}
         />
     );
 };
 
 
+const softActiveBg = '#e8f2ff';          // warna latar lembut
+const softActiveText = '#50a3e7ff';
+
+
 const MenuBar = () => {
 
     const navigate = useNavigate();
-    const { pathname } = useLocation();W
+    const { pathname } = useLocation();
     const handleNavigation = (path) => {
         navigate(path);
     };
@@ -42,22 +43,26 @@ const MenuBar = () => {
         <FluentProvider theme={webLightTheme}>
             <Toolbar
                 style={{
-                    backgroundColor: '#ffffff',
-                    padding: '0 16px',
+                    backgroundColor: "#ffffff",
+                    padding: "0 16px",
                     height: 38,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    borderBottom: '1px solid #e0e0e0',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid #e0e0e0",
                 }}
             >
                 <ToolbarGroup>
-                    {/* Dashboard (selalu aktif pada root “/”) */}
+                    {/* Dashboard */}
                     <ToolbarButton
                         aria-label="Dashboard"
                         title="Dashboard"
-                        appearance={isActive('/') ? 'primary' : 'subtle'}
-                        onClick={() => handleNavigation('/')}
+                        // gunakan style untuk warna custom
+                        style={{
+                            backgroundColor: isActive("/") ? softActiveBg : "transparent",
+                            color: isActive("/") ? softActiveText : "inherit",
+                        }}
+                        onClick={() => handleNavigation("/")}
                     >
                         <AppsRegular /> Dashboard
                     </ToolbarButton>
@@ -68,9 +73,16 @@ const MenuBar = () => {
                             <ToolbarButton
                                 aria-label="Employee"
                                 title="Employee Self Service"
-                                appearance={isActive('/leave-request') || isActive('/overtime-request')
-                                    ? 'primary'
-                                    : 'subtle'}
+                                style={{
+                                    backgroundColor:
+                                        isActive("/leave-request") || isActive("/overtime-request")
+                                            ? softActiveBg
+                                            : "transparent",
+                                    color:
+                                        isActive("/leave-request") || isActive("/overtime-request")
+                                            ? softActiveText
+                                            : "inherit",
+                                }}
                                 icon={<CalendarRegular />}
                             >
                                 Employee Self Service
@@ -80,14 +92,21 @@ const MenuBar = () => {
                         <MenuPopover>
                             <MenuList>
                                 <MenuItem
-                                    onClick={() => handleNavigation('/leave-request')}
-                                    selected={isActive('/leave-request')}
+                                    onClick={() => handleNavigation("/leave-request")}
+                                    // style aktif pada item submenu
+                                    style={{
+                                        backgroundColor: isActive("/leave-request") ? softActiveBg : "transparent",
+                                        color: isActive("/leave-request") ? softActiveText : "inherit",
+                                    }}
                                 >
                                     Time Off Request
                                 </MenuItem>
                                 <MenuItem
-                                    onClick={() => handleNavigation('/overtime-request')}
-                                    selected={isActive('/overtime-request')}
+                                    onClick={() => handleNavigation("/overtime-request")}
+                                    style={{
+                                        backgroundColor: isActive("/overtime-request") ? softActiveBg : "transparent",
+                                        color: isActive("/overtime-request") ? softActiveText : "inherit",
+                                    }}
                                 >
                                     Overtime Request
                                 </MenuItem>

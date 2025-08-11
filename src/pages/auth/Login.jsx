@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, PrimaryButton, Stack, MessageBar, MessageBarType } from '@fluentui/react';
-import authClient from '../../service/autClient';
+import authClient, { getCsrfToken } from '../../service/authClient';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -11,17 +11,13 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Cek token di localStorage saat komponen pertama kali dirender
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      // Jika token ditemukan, redirect ke halaman home
-      navigate('/home');
-    }
+    if (token) navigate('/home');
   }, [navigate]);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
     if (!email || !password) {
       setErrorMessage('Email and password are required');
@@ -32,27 +28,26 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const response = await authClient.post('/login', {
-        email,
-        password,
-      });
+      // 1️⃣ Dapatkan cookie CSRF
+      const csrf = await getCsrfToken(); 
+
+      console.log(csrf)
+
+      const response = await authClient.post(
+        '/api/login',
+        { email, password },
+        { headers: { 'X-XSRF-TOKEN': csrf } }
+      );
 
       const { token, user } = response.data;
-
-      // Simpan token dan data user ke localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
       alert(`Login successful! Welcome, ${user.full_name}`);
-
-      // Redirect ke halaman home setelah login sukses
       navigate('/home');
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage('Login failed. Please try again.');
-      }
+    } catch (err) {
+      const msg = err.response?.data?.message ?? 'Login failed. Please try again.';
+      setErrorMessage(msg);
     } finally {
       setLoading(false);
     }
@@ -69,7 +64,7 @@ const LoginForm = () => {
         padding: 20,
       }}
     >
-      <form onSubmit={onSubmit} style={{ maxWidth: 360, width: '100%', height: 360 }}>
+      <form onSubmit={onSubmit} style={{ maxWidth: 360, width: '100%' }}>
         <Stack
           tokens={{ childrenGap: 25 }}
           styles={{
@@ -81,56 +76,26 @@ const LoginForm = () => {
             },
           }}
         >
-          <label style={{ textAlign: 'center',fontSize:"20px" }}><b>Login</b></label>
+          <label style={{ textAlign: 'center', fontSize: '20px' }}>
+            <b>Login</b>
+          </label>
           {errorMessage && (
             <MessageBar messageBarType={MessageBarType.error}>{errorMessage}</MessageBar>
           )}
           <TextField
             label="Email"
             value={email}
-            onChange={(e, newValue) => setEmail(newValue || '')}
+            onChange={(e, v) => setEmail(v || '')}
             required
-            styles={{
-              fieldGroup: {
-                borderWidth: 1,
-                borderColor: '#c8c6c4',
-                borderRadius: 1,
-                height: 33,
-                fontSize: 16,
-              },
-              field: {
-                fontSize: 14,
-                height: 30,
-                padding: '0 10px',
-              },
-            }}
           />
           <TextField
             label="Password"
             type="password"
             value={password}
-            onChange={(e, newValue) => setPassword(newValue || '')}
+            onChange={(e, v) => setPassword(v || '')}
             required
-            styles={{
-              fieldGroup: {
-                borderWidth: 1,
-                borderColor: '#c8c6c4',
-                borderRadius: 1,
-                height: 33,
-                fontSize: 14,
-              },
-              field: {
-                fontSize: 14,
-                height: 30,
-                padding: '0 10px',
-              },
-            }}
           />
-          <PrimaryButton
-            type="submit"
-            text={loading ? 'Logging in...' : 'Login'}
-            disabled={loading}
-          />
+          <PrimaryButton type="submit" text={loading ? 'Logging in...' : 'Login'} disabled={loading} />
         </Stack>
       </form>
     </div>
