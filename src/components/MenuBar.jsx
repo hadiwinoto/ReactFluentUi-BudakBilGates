@@ -15,21 +15,8 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import client from '../service/authClient';
 
-const IconButton = ({ Icon }) => {
-    const [hover, setHover] = useState(false);
-    return (
-        <ToolbarButton
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            icon={<Icon style={{ color: hover ? '#166cb3ff' : 'white' }} />}
-        />
-    );
-};
-
-
-const softActiveBg = '#e8f2ff';          // warna latar lembut
+const softActiveBg = '#e8f2ff';
 const softActiveText = '#50a3e7ff';
-
 
 const MenuBar = () => {
 
@@ -93,7 +80,6 @@ const MenuBar = () => {
                             <MenuList>
                                 <MenuItem
                                     onClick={() => handleNavigation("/leave-request")}
-                                    // style aktif pada item submenu
                                     style={{
                                         backgroundColor: isActive("/leave-request") ? softActiveBg : "transparent",
                                         color: isActive("/leave-request") ? softActiveText : "inherit",
